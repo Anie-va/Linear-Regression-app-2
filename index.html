@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Predictor App</title>
+    <style>
+        body { 
+            background-color: #f0f2f5; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            padding: 50px 20px; 
+            margin: 0;
+        }
+        .main-container { 
+            display: flex; 
+            gap: 30px; 
+            max-width: 900px; 
+            width: 100%; 
+        }
+        .box { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+            width: 100%; 
+        }
+        h2 { 
+            color: #333; 
+            margin-top: 0; 
+            border-bottom: 3px solid; 
+            padding-bottom: 10px; 
+            font-size: 1.4rem;
+        }
+        .student-title { border-bottom-color: #00b894; }
+        .movie-title { border-bottom-color: #e17055; }
+        
+        label { 
+            font-weight: 600; 
+            color: #555; 
+            display: block; 
+            margin-top: 15px; 
+            font-size: 0.9rem; 
+        }
+        input[type="text"] { 
+            width: 100%; 
+            padding: 12px; 
+            margin-top: 6px; 
+            border: 1px solid #ddd; 
+            border-radius: 6px; 
+            box-sizing: border-box; 
+            background: #fafafa;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #aaa;
+        }
+        
+        button { 
+            width: 100%; 
+            padding: 14px; 
+            margin-top: 25px; 
+            border: none; 
+            border-radius: 6px; 
+            color: white; 
+            font-size: 1rem;
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.2s; 
+        }
+        .btn-student { background-color: #00b894; }
+        .btn-student:hover { background-color: #009e7f; }
+        .btn-movie { background-color: #e17055; }
+        .btn-movie:hover { background-color: #c96249; }
+        
+        .result { 
+            margin-top: 25px; 
+            padding: 15px; 
+            border-radius: 6px; 
+            text-align: center; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            background: #f8f9fa; 
+            border: 1px dashed #ccc; 
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Left Side: Students -->
+        <div class="box">
+            <h2 class="student-title">🎓 Student Predictor</h2>
+            <form action="/predict_score" method="POST">
+                <label>Study Hours</label>
+                <input type="text" name="study_hours" placeholder="e.g. 5.5" required>
+                
+                <label>Previous Exam Score</label>
+                <input type="text" name="last_score" placeholder="e.g. 75" required>
+                
+                <button type="submit" class="btn-student">Predict Final Score</button>
+            </form>
+            
+            {% if result_student %}
+                <div class="result">🎯 {{ result_student }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Right Side: Movies -->
+        <div class="box">
+            <h2 class="movie-title">🎬 Movie Predictor</h2>
+            <form action="/predict_rating" method="POST">
+                <label>Release Year</label>
+                <input type="text" name="year" placeholder="e.g. 2014" required>
+                
+                <label>Popularity Score</label>
+                <input type="text" name="popularity" placeholder="e.g. 150.5" required>
+                
+                <button type="submit" class="btn-movie">Predict IMDB Rating</button>
+            </form>
+
+            {% if result_movie %}
+                <div class="result">⭐ {{ result_movie }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>
